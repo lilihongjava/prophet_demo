@@ -47,7 +47,7 @@ def main():
     fig = m.plot_components(forecast)
     fig.show()
 
-    # 内置乡村假期
+    # 内置国家假期
     m = Prophet(holidays=holidays)
     m.add_country_holidays(country_name='US')
     m.fit(df)
@@ -57,7 +57,7 @@ def main():
     fig = m.plot_components(forecast)
     fig.show()
 
-    # 季节性的傅立叶顺序
+    # 季节性的傅立叶级数
     m = Prophet().fit(df)
     a = plot_yearly(m)
     plt.show()
@@ -65,7 +65,7 @@ def main():
     a = plot_yearly(m)
     plt.show()
 
-    # 指定自定义季节
+    # 指定自定义季节性
     m = Prophet(weekly_seasonality=False)
     m.add_seasonality(name='monthly', period=30.5, fourier_order=5)
     forecast = m.fit(df).predict(future)
@@ -90,7 +90,7 @@ def main():
     fig = m.plot_components(forecast)
     fig.show()
 
-    # 节假日和季节性的先前规模
+    # 节假日和季节性的先验scale
     m = Prophet(holidays=holidays, holidays_prior_scale=0.05).fit(df)
     forecast = m.predict(future)
     print(forecast[(forecast['playoff'] + forecast['superbowl']).abs() > 0][
@@ -99,7 +99,7 @@ def main():
     m.add_seasonality(
         name='weekly', period=7, fourier_order=3, prior_scale=0.1)
 
-    # 额外的回归量
+    # 额外回归量
     def nfl_sunday(ds):
         date = pd.to_datetime(ds)
         if date.weekday() == 6 and (date.month > 8 or date.month < 2):
